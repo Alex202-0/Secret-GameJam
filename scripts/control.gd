@@ -2,6 +2,7 @@ extends Control
 
 # Reference to the Continue button in the scene tree.
 @onready var continue_button: Button = $ColorRect/MarginContainer/VBoxContainer/Continue
+@onready var main = "res://scenes/main.tscn"
 
 func _ready() -> void:
 	# Disable the Continue button by default so the player cannot press it if there
@@ -70,4 +71,8 @@ func clear_saved_game() -> void:
 func apply_game_state(state: Dictionary) -> void:
 	# This function will eventually contain logic to restore the game's state
 	# using the data in the provided `state` dictionary.
+	state["position"] = main.player.position
+	state["health"] = main.player.healh
+	
+	
 	print("Loaded game state:", state)

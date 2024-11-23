@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
-
+var inventario = []
+var health = 100
 const SPEED = 300.0
 @onready var anim = $AnimatedSprite2D
 
