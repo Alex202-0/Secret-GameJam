@@ -71,8 +71,13 @@ func clear_saved_game() -> void:
 func apply_game_state(state: Dictionary) -> void:
 	# This function will eventually contain logic to restore the game's state
 	# using the data in the provided `state` dictionary.
-	state["position"] = main.player.position
-	state["health"] = main.player.healh
+	var health = state["health"]
+	var pos = state["position"]
+	var pos_x = pos["x"]
+	var pos_y = pos["y"]
+	
+	main.player.set_health(health)
+	main.player.set_position(Vector2(pos_x, pos_y))
 	
 	
 	print("Loaded game state:", state)

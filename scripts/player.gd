@@ -5,6 +5,14 @@ var health = 100
 const SPEED = 300.0
 @onready var anim = $AnimatedSprite2D
 
+func set_health(newhealth: int) -> void:
+	health = newhealth
+	print("new health is ", health)
+	
+func set_pos(new_pos: Vector2) -> void:
+	position = new_pos
+	print("new postion is ", position) 
+
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():

@@ -5,7 +5,10 @@ extends Node2D
 func save_player_state() -> Dictionary:
 	
 	var player_data = {
-		"position" : player.position,
+		"position" : {
+			"x" : player.position.x,
+			"y" : player.position.y,
+		},
 		"health" : player.health,
 	}
 	return player_data
@@ -16,4 +19,4 @@ func save_game() -> void:
 	
 	file.store_string(JSON.stringify(player_data))
 	file.close()
-	print("guardado exitoso")
+	print("guardado exitoso en: ", OS.get_user_data_dir())
