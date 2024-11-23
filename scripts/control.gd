@@ -13,7 +13,7 @@ func _ready() -> void:
 # When New Game is pressed, clears any existing saved game data and starts a new game by changing the scene.
 func _on_new_game_pressed() -> void:
 	clear_saved_game()
-	get_tree().change_scene_to_file("res://game.tscn")
+	get_tree().change_scene_to_file("res://scenes/main.tscn")
 
 func update_continue_button() -> void:
 	# Enable the Continue button if a save file exists otherwise, disable the Continue button.
@@ -26,7 +26,7 @@ func _on_continue_pressed() -> void:
 
 # Transitions to the options scene where the player can adjust settings when Options button is pressed
 func _on_options_pressed() -> void:
-	get_tree().change_scene_to_file("res://options.tscn")
+	get_tree().change_scene_to_file("res://scenes/temp_options.tscn")
 
 # When the exit button is pressed, the game application is terminated
 func _on_exit_pressed() -> void:
@@ -49,7 +49,7 @@ func load_saved_game() -> void:
 			# If parsing succeeds, apply the saved game state.
 			apply_game_state(save_data.result)  # The parsed data is in `result`.
 			# Transition to the game scene.
-			get_tree().change_scene_to_file("res://game.tscn")
+			get_tree().change_scene_to_file("res://scenes/main.tscn")
 		else:
 			# Log an error if the JSON parsing fails.
 			print("Failed to parse save data: ", save_data.error_string)
