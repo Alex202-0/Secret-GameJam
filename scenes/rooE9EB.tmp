@@ -1,0 +1,59 @@
+[gd_scene load_steps=10 format=3 uid="uid://pufg5sekupc4"]
+
+[ext_resource type="Texture2D" uid="uid://dk2lujrosulhl" path="res://art/window.png" id="1_buht3"]
+[ext_resource type="Script" path="res://scripts/room_scene.gd" id="1_q55mk"]
+[ext_resource type="Texture2D" uid="uid://b72ul3nklqban" path="res://art/desk.png" id="2_oao18"]
+[ext_resource type="Texture2D" uid="uid://ctspx3v40dlsi" path="res://art/door.png" id="3_6btu1"]
+[ext_resource type="Script" path="res://scripts/interactive.gd" id="3_yr51p"]
+[ext_resource type="Script" path="res://scripts/cammovement.gd" id="4_75gd4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_572ru"]
+size = Vector2(712, 696)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pmb17"]
+size = Vector2(860, 804)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7hh0q"]
+size = Vector2(640, 631)
+
+[node name="RoomScene" type="Node2D"]
+position = Vector2(-6, 6)
+script = ExtResource("1_q55mk")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(963, 539)
+script = ExtResource("4_75gd4")
+
+[node name="desktnode" type="Node2D" parent="."]
+position = Vector2(-1, 539)
+script = ExtResource("3_yr51p")
+
+[node name="desk" type="Sprite2D" parent="desktnode"]
+position = Vector2(966, -2)
+texture = ExtResource("2_oao18")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="desktnode"]
+position = Vector2(977, 185)
+shape = SubResource("RectangleShape2D_572ru")
+
+[node name="windownode" type="Node2D" parent="."]
+script = ExtResource("3_yr51p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="windownode"]
+position = Vector2(-58, 526)
+shape = SubResource("RectangleShape2D_pmb17")
+
+[node name="window" type="Sprite2D" parent="windownode"]
+position = Vector2(-1, 539)
+texture = ExtResource("1_buht3")
+
+[node name="doornode" type="Node2D" parent="."]
+script = ExtResource("3_yr51p")
+
+[node name="door" type="Sprite2D" parent="doornode"]
+position = Vector2(1914, 546)
+texture = ExtResource("3_6btu1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="doornode"]
+position = Vector2(1920, 549.5)
+shape = SubResource("RectangleShape2D_7hh0q")

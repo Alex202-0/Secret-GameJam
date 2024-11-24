@@ -1,0 +1,67 @@
+[gd_scene load_steps=9 format=3 uid="uid://pufg5sekupc4"]
+
+[ext_resource type="Texture2D" uid="uid://dk2lujrosulhl" path="res://art/window.png" id="1_buht3"]
+[ext_resource type="Script" path="res://scripts/room_scene.gd" id="1_q55mk"]
+[ext_resource type="Texture2D" uid="uid://b72ul3nklqban" path="res://art/desk.png" id="2_oao18"]
+[ext_resource type="Texture2D" uid="uid://ctspx3v40dlsi" path="res://art/door.png" id="3_6btu1"]
+[ext_resource type="Script" path="res://scripts/cammovement.gd" id="4_75gd4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_572ru"]
+size = Vector2(332, 250)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pmb17"]
+size = Vector2(140, 170)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2cluf"]
+size = Vector2(229, 257)
+
+[node name="RoomScene" type="Node2D"]
+position = Vector2(-6, 6)
+script = ExtResource("1_q55mk")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(963, 539)
+script = ExtResource("4_75gd4")
+
+[node name="desktnode" type="Node2D" parent="."]
+position = Vector2(-1, 539)
+
+[node name="desk" type="Sprite2D" parent="desktnode"]
+position = Vector2(966, -2)
+texture = ExtResource("2_oao18")
+
+[node name="Area2D" type="Area2D" parent="desktnode"]
+position = Vector2(-2, -5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="desktnode/Area2D"]
+position = Vector2(961, 17)
+shape = SubResource("RectangleShape2D_572ru")
+
+[node name="windownode" type="Node2D" parent="."]
+
+[node name="window" type="Sprite2D" parent="windownode"]
+position = Vector2(-1, 539)
+texture = ExtResource("1_buht3")
+
+[node name="Area2D" type="Area2D" parent="windownode"]
+position = Vector2(1910.5, 546.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="windownode/Area2D"]
+position = Vector2(-1913.5, -12.5)
+shape = SubResource("RectangleShape2D_pmb17")
+
+[node name="doornode" type="Node2D" parent="."]
+
+[node name="door" type="Sprite2D" parent="doornode"]
+position = Vector2(1914, 546)
+texture = ExtResource("3_6btu1")
+
+[node name="Area2D" type="Area2D" parent="doornode"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="doornode/Area2D"]
+position = Vector2(1910.5, 546.5)
+shape = SubResource("RectangleShape2D_2cluf")
+
+[connection signal="input_event" from="desktnode/Area2D" to="." method="_on_area_2d_input_event"]
+[connection signal="input_event" from="windownode/Area2D" to="." method="_on_area_2d_input_event"]
+[connection signal="input_event" from="doornode/Area2D" to="." method="_on_area_2d_input_event"]
