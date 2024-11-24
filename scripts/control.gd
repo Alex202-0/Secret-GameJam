@@ -2,7 +2,6 @@ extends Control
 
 # Reference to the Continue button in the scene tree.
 @onready var continue_button: Button = $ColorRect/MarginContainer/VBoxContainer/Continue
-@onready var main = "res://scenes/main.tscn"
 
 func _ready() -> void:
 	# Disable the Continue button by default so the player cannot press it if there
@@ -38,22 +37,34 @@ func has_saved_game() -> bool:
 	return FileAccess.file_exists("user://save_game.json")
 
 func load_saved_game() -> void:
-	# This function loads the game state from the save file.
-	# The save file format is JSON (JavaScript Object Notation).
+	# Check if the save file exists
+	if not FileAccess.file_exists("user://save_game.json"):
+		print("Save file does not exist")
+		return
+
+	# Open the save file
 	var file = FileAccess.open("user://save_game.json", FileAccess.READ)
 	if file:
-		# Create a JSON instance to parse the file content.
-		var json = JSON.new()
-		var save_data = json.parse(file.get_as_text())  # Parse the file's content as JSON.
+		var file_content = file.get_as_text()
 		file.close()
-		if save_data.error == OK:
-			# If parsing succeeds, apply the saved game state.
-			apply_game_state(save_data.result)  # The parsed data is in `result`.
-			# Transition to the game scene.
-			get_tree().change_scene_to_file("res://scenes/main.tscn")
+
+		# Create a JSON instance
+		var json = JSON.new()
+
+		# Parse the file content
+		var parsed_data = json.parse_string(file_content)
+
+		# Ensure the parsed data is a Dictionary
+		if typeof(parsed_data) == TYPE_DICTIONARY:
+			print("Loaded save data: ", parsed_data)
+			apply_game_state(parsed_data)  # Pass the parsed Dictionary to apply_game_state
+			get_tree().change_scene_to_file("res://scenes/main.tscn")  # Load the game scene
 		else:
-			# Log an error if the JSON parsing fails.
-			print("Failed to parse save data: ", save_data.error_string)
+			print("Failed to load save data: Invalid JSON format or structure")
+	else:
+		print("Failed to open save file")
+
+
 
 # This function clears the existing save data.
 func clear_saved_game() -> void:
@@ -69,15 +80,20 @@ func clear_saved_game() -> void:
 
 # Applies the loaded game state to the game.
 func apply_game_state(state: Dictionary) -> void:
-	# This function will eventually contain logic to restore the game's state
-	# using the data in the provided `state` dictionary.
-	var health = state["health"]
-	var pos = state["position"]
-	var pos_x = pos["x"]
-	var pos_y = pos["y"]
-	
-	main.player.set_health(health)
-	main.player.set_position(Vector2(pos_x, pos_y))
-	
-	
-	print("Loaded game state:", state)
+	# Get the main scene node directly
+	var main = get_tree().root.get_node("main")
+	if main:
+		var player = main.get_node("player")
+		if player:
+			
+			var health = state["health"]
+			var pos = state["position"]
+			var pos_x = pos["x"]
+			var pos_y = pos["y"]
+			
+			player.set_health(health)
+			player.set_position(Vector2(pos_x, pos_y))
+		else:
+			print("Error: Player node not found in main scene!")
+	else:
+		print("Error: Main scene not found!")
