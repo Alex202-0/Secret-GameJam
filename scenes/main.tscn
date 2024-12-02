@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bqchweuvkknl0"]
+[gd_scene load_steps=5 format=3 uid="uid://bqchweuvkknl0"]
 
 [ext_resource type="Texture2D" uid="uid://cf7hwus1ga4rk" path="res://icon.svg" id="1_xi0ip"]
 [ext_resource type="PackedScene" uid="uid://c84wryk0s2ea1" path="res://scenes/player.tscn" id="2_sm2n5"]
+[ext_resource type="PackedScene" uid="uid://cm5g0x1yfgnai" path="res://inventory/inventory_ui.tscn" id="3_b54su"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a3571"]
 size = Vector2(128, 128)
@@ -43,3 +44,20 @@ shape = SubResource("RectangleShape2D_a3571")
 [node name="player" parent="." instance=ExtResource("2_sm2n5")]
 position = Vector2(548, 898)
 scale = Vector2(4, 4)
+
+[node name="InventoryLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+follow_viewport_scale = 10.0
+
+[node name="InventoryUI" parent="InventoryLayer" instance=ExtResource("3_b54su")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.0
+offset_top = -26.0
+offset_right = 33.0
+offset_bottom = 26.0
+grow_horizontal = 2
+grow_vertical = 2
